@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtAuthMiddleware;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 
 Route::middleware([JwtAuthMiddleware::class])->group(function () {
@@ -23,6 +24,8 @@ Route::middleware([AdminMiddleware::class, JwtAuthMiddleware::class])->group(fun
     Route::get('dashboard/metrics', [DashboardController::class, 'index']);
     Route::get('dashboard/projects-by-month', [DashboardController::class, 'projectsByMonth']);
 });
+
+Route::post('/contact', [ContactController::class, 'store']);
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);

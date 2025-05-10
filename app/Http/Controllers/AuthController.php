@@ -13,9 +13,7 @@ use Illuminate\Routing\Controllers\Middleware;
 class AuthController extends Controller
 {
     public static function middleware(): array {
-        return [
-            new Middleware('auth:api', except: ['register', 'login']),
-        ];
+        return [];
     }
 
     public function register(RegistrationRequest $request)

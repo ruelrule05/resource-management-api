@@ -22,16 +22,20 @@ class ProjectController extends Controller
         if ($request->has('search')) {
             $searchTerm = $request->get('search');
 
-            $query->where('name', 'like', '%' . $searchTerm . '%')
-            ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                  ->orWhere('description', 'like', "%{$searchTerm}%")
+                  ->orWhere('status', 'like', "%{$searchTerm}%");
+            });
         }
 
-        if ($request->has('sort_by') && in_array($request->input('sort_by'), ['name', 'start_date', 'created_at'])) {
+        if ($request->has('sort_by') && in_array($request->input('sort_by'), ['name', 'start_date', 'created_at', 'id'])) {
             $sortDirection = $request->get('sort_direction', 'asc');
             $query->orderBy($request->input('sort_by'), $sortDirection);
         }
 
-        $projects = $query->paginate(10);
+        $perPage = $request->input('per_page', 10);
+        $projects = $query->paginate($perPage)->appends($request->query());
 
         return ProjectResource::collection($projects);
     }

@@ -8,7 +8,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 
-Route::middleware([JwtAuthMiddleware::class])->group(function () {
+Route::middleware([JwtAuthMiddleware::class, 'throttle:60,1'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
@@ -16,7 +16,7 @@ Route::middleware([JwtAuthMiddleware::class])->group(function () {
     Route::apiResource('projects', ProjectController::class);
 });
 
-Route::middleware([AdminMiddleware::class, JwtAuthMiddleware::class])->group(function () {
+Route::middleware([AdminMiddleware::class, JwtAuthMiddleware::class, 'throttle:60,1'])->group(function () {
     Route::get('sample', function() {
         dd('hello there admin!');
     });

@@ -22,7 +22,11 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        return response()->json(compact('totalProjects', 'projectsByStatus', 'recentProjects'));
+        return response()->json([
+            'total_projects' => $totalProjects,
+            'projects_by_status' => $projectsByStatus,
+            'recent_projects' => $recentProjects,
+        ]);
     }
 
     public function projectsByMonth(Request $request): JsonResponse

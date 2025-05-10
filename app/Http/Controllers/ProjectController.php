@@ -32,6 +32,8 @@ class ProjectController extends Controller
         if ($request->has('sort_by') && in_array($request->input('sort_by'), ['name', 'start_date', 'created_at', 'id'])) {
             $sortDirection = $request->get('sort_direction', 'asc');
             $query->orderBy($request->input('sort_by'), $sortDirection);
+        } else {
+            $query->orderBy('created_at', 'desc');
         }
 
         $perPage = $request->input('per_page', 10);

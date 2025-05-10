@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtAuthMiddleware;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\DashboardController;
 
 Route::middleware([JwtAuthMiddleware::class])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
@@ -14,10 +15,13 @@ Route::middleware([JwtAuthMiddleware::class])->group(function () {
     Route::apiResource('projects', ProjectController::class);
 });
 
-Route::middleware([AdminMiddleware::class])->group(function () {
+Route::middleware([AdminMiddleware::class, JwtAuthMiddleware::class])->group(function () {
     Route::get('sample', function() {
         dd('hello there admin!');
     });
+
+    Route::get('dashboard/metrics', [DashboardController::class, 'index']);
+    Route::get('dashboard/projects-by-month', [DashboardController::class, 'projectsByMonth']);
 });
 
 Route::post('login', [AuthController::class, 'login']);

@@ -4,11 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\JwtAuthMiddleware;
+use App\Http\Controllers\ProjectController;
 
 Route::middleware([JwtAuthMiddleware::class])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+
+    Route::apiResource('projects', ProjectController::class);
 });
 
 Route::middleware([AdminMiddleware::class])->group(function () {

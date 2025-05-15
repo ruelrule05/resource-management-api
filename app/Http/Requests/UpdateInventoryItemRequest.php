@@ -25,7 +25,7 @@ class UpdateInventoryItemRequest extends FormRequest
             'name' => ['required'],
             'description' => ['nullable'],
             'quantity' => ['required', 'integer'],
-            'sku' => ['nullable', 'unique:inventory_items,sku,' . $this->route('inventory_item')],
+            'sku' => ['nullable', 'unique:inventory_items,sku,' . $this->route('inventory_item')->id],
             'status' => ['required'],
         ];
     }

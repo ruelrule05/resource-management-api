@@ -14,7 +14,7 @@ Ensure you have Docker Desktop installed and running.
 
 1.  **Clone the Backend Repository:**
     ```bash
-    git clone [https://github.com/ruelrule05/resource-management-api.git](https://github.com/ruelrule05/resource-management-api.git)
+    git clone https://github.com/ruelrule05/resource-management-api.git
     cd resource-management-api
     ```
 

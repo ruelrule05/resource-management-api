@@ -6,7 +6,7 @@ This is the backend API for the Resource Management Dashboard, built using Larav
 
 ## Public Repository
 
-[Resource Management API: https://github.com/ruelrule05/resource-management-api](https://github.com/ruelrule05/resource-management-api)
+[Resource Management API](https://github.com/ruelrule05/resource-management-api)
 
 ## Setup Instructions (Using Laravel Sail - Recommended)
 

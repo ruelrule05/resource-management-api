@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Http\Resources\TaskResource;
@@ -38,9 +39,19 @@ class TaskController extends Controller
         }
 
         // Define sortable field to avoid issues when manually entering via address bar
-        if ($request->has('sort_by') && in_array($request->input('sort_by'), ['title', 'status', 'project_id', 'due_date', 'created_at'])) {
+        if ($request->has('sort_by')) {
+            $sortBy = $request->input('sort_by');
             $sortDirection = $request->input('sort_direction', 'asc');
-            $query->orderBy($request->input('sort_by'), $sortDirection);
+
+            if ($sortBy === 'project.name') {
+                $query->join('projects', 'tasks.project_id', '=', 'projects.id')
+                      ->orderBy('projects.name', $sortDirection)
+                      ->select('tasks.*');
+            } elseif (in_array($sortBy, ['title', 'status', 'project_id', 'due_date', 'created_at'])) {
+                $query->orderBy($sortBy, $sortDirection);
+            } else {
+                $query->orderBy('created_at', 'desc');
+            }
         } else {
             $query->orderBy('created_at', 'desc');
         }
